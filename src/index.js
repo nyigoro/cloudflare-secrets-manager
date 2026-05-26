@@ -55,7 +55,7 @@ export default {
           config: "/config",
           features: "/features",
         },
-        message: "Replace src/index.js with your Worker logic. This template reads both secrets and plain-text variables from env.",
+        message: "Replace src/index.js with your Worker logic. This template reads both secrets and plaintext variables from env.",
       });
     }
 
