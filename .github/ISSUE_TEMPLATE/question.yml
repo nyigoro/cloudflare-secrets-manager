@@ -1,0 +1,52 @@
+name: Question
+description: Ask for help using the project.
+title: "[Question]: "
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please check the troubleshooting guide first:
+        https://github.com/nyigoro/cloudflare-secrets-manager/blob/main/docs/troubleshooting.md
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What are you trying to do?
+      placeholder: How do I deploy staging without changing production secrets?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Setup
+        - Secrets
+        - Plaintext variables
+        - Deployment
+        - Rotation
+        - Templates
+        - npm package
+        - GitHub Packages
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Add relevant commands, config snippets, or logs. Redact secrets.
+      render: shell
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed or redacted real secrets, tokens, account IDs, and private URLs.
+          required: true

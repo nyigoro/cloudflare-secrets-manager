@@ -1,0 +1,92 @@
+name: Bug report
+description: Report something that is broken or behaving unexpectedly.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please remove or redact all real secrets, tokens, account IDs, and private URLs before submitting.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What went wrong?
+      placeholder: Running npm run deploy fails after syncing secrets...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the exact commands and files involved.
+      placeholder: |
+        1. Copy production.env.example to production.env
+        2. Run npm run deploy:dry-run
+        3. Run npm run deploy
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: The Worker deploys and shows the expected plaintext variables.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: Wrangler exits with...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output
+      description: Paste logs, with secrets redacted.
+      render: shell
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: 2.0.3
+
+  - type: input
+    id: wrangler-version
+    attributes:
+      label: Wrangler version
+      placeholder: 4.94.0
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: shell
+    attributes:
+      label: Shell
+      placeholder: PowerShell, Git Bash, WSL, zsh, bash
+
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: I removed or redacted real secrets, tokens, account IDs, and private URLs.
+          required: true

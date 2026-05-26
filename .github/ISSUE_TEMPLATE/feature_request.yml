@@ -1,0 +1,52 @@
+name: Feature request
+description: Suggest an improvement or new workflow.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What workflow or pain point should this solve?
+      placeholder: I want to manage another Cloudflare environment without duplicating scripts...
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What would you like to happen?
+      placeholder: Add a command/template/config option that...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What have you tried instead?
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Secrets
+        - Plaintext variables
+        - Wrangler deploy wrapper
+        - Rotation
+        - Templates
+        - Documentation
+        - GitHub Actions
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      options:
+        - label: I would be willing to open a pull request for this.
