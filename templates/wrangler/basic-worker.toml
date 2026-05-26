@@ -1,0 +1,9 @@
+# Basic Cloudflare Worker config.
+# Copy to wrangler.toml and change the Worker name.
+
+name = "my-worker"
+main = "src/index.js"
+compatibility_date = "2026-04-23"
+
+[vars]
+ENVIRONMENT = "production"

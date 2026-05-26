@@ -66,12 +66,14 @@ Default files:
 |---|---|---|
 | `production.env` | Production | Encrypted Worker secrets |
 | `staging.env` | Staging | Encrypted Worker secrets |
+| `production.env.example` | Production template | Safe example secret names |
+| `staging.env.example` | Staging template | Safe example secret names |
 
 Example:
 
 ```env
 MY_SECRET_KEY=replace-me
-DATABASE_URL=postgres://user:password@host:5432/database
+DATABASE_URL=postgres://app_user:replace_with_db_secret@host:5432/database
 JWT_SECRET=replace-me
 ```
 
@@ -339,3 +341,24 @@ npm run example:test-live -- https://<example-worker>.workers.dev hello-from-clo
 ```
 
 Read `example/README.md` for the complete walkthrough.
+
+## Templates
+
+The `templates/` directory provides reusable starting points for:
+
+- Secret env files.
+- Plain-text variable files.
+- Wrangler configs.
+- Worker entry points.
+- GitHub Actions deployment.
+
+Use them when starting a new Worker or when adapting this repository to an existing Worker:
+
+```bash
+cp templates/wrangler/production-staging.toml wrangler.toml
+cp templates/workers/health-config-worker.js src/index.js
+cp templates/secrets/api-worker.env.example production.env
+cp templates/variables/web-api.vars.env.example production.vars.env
+```
+
+Read `docs/templates.md` for the full template catalog.

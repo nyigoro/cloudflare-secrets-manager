@@ -20,6 +20,7 @@ The project is intentionally simple: it wraps Wrangler, keeps the behavior visib
 - [Secrets And Variables](#secrets-and-variables)
 - [Quick Start](#quick-start)
 - [Common Workflows](#common-workflows)
+- [Templates](#templates)
 - [Command Reference](#command-reference)
 - [Project Layout](#project-layout)
 - [Documentation](#documentation)
@@ -113,19 +114,31 @@ ENVIRONMENT = "staging"
 
 ### 3. Create secret files
 
-Create `production.env` for production secrets:
+Copy the production template:
+
+```bash
+cp production.env.example production.env
+```
+
+Then replace the placeholders:
 
 ```env
 MY_SECRET_KEY=replace-with-a-real-secret
-DATABASE_URL=postgres://user:password@host:5432/database
+DATABASE_URL=postgres://app_user:replace_with_db_secret@host:5432/database
 JWT_SECRET=replace-with-a-long-random-value
 ```
 
-Create `staging.env` for staging secrets:
+Copy the staging template:
+
+```bash
+cp staging.env.example staging.env
+```
+
+Then replace the placeholders:
 
 ```env
 MY_SECRET_KEY=replace-with-a-staging-secret
-DATABASE_URL=postgres://user:password@staging-host:5432/database
+DATABASE_URL=postgres://app_user:replace_with_db_secret@staging-host:5432/database
 JWT_SECRET=replace-with-a-different-long-random-value
 ```
 
@@ -238,6 +251,31 @@ The rotation helper:
 4. Uploads the new values.
 5. Lists the resulting secret names.
 
+## Templates
+
+The repository includes a reusable template catalog in `templates/`:
+
+| Path | Purpose |
+|---|---|
+| `production.env.example` | Root production secret template |
+| `staging.env.example` | Root staging secret template |
+| `templates/secrets/` | Minimal, API, and database secret templates |
+| `templates/variables/` | Minimal, web API, and feature flag variable templates |
+| `templates/wrangler/` | Basic, production/staging, and cron Worker configs |
+| `templates/workers/` | Starter Worker implementations |
+| `templates/github-actions/` | GitHub Actions deploy workflow template |
+
+Common copies:
+
+```bash
+cp templates/secrets/api-worker.env.example production.env
+cp templates/variables/web-api.vars.env.example production.vars.env
+cp templates/wrangler/production-staging.toml wrangler.toml
+cp templates/workers/health-config-worker.js src/index.js
+```
+
+See [Template Catalog](templates/README.md) and [Template Guide](docs/templates.md) for details.
+
 ## Command Reference
 
 | Command | What it does |
@@ -275,6 +313,7 @@ cloudflare-secrets-manager/
 |   |-- getting-started.md
 |   |-- publishing.md
 |   |-- security.md
+|   |-- templates.md
 |   `-- troubleshooting.md
 |-- example/
 |   |-- live-test.env.example
@@ -287,11 +326,14 @@ cloudflare-secrets-manager/
 |   |-- deploy-with-vars.mjs
 |   `-- show-vars.mjs
 |-- src/index.js
+|-- templates/
 |-- LICENSE
 |-- manage-secrets.sh
 |-- package.json
+|-- production.env.example
 |-- production.vars.env.example
 |-- rotate-secrets.sh
+|-- staging.env.example
 |-- staging.vars.env.example
 |-- wrangler.toml
 `-- README.md
@@ -305,6 +347,7 @@ Read the detailed guides:
 - [Configuration Guide](docs/configuration.md)
 - [Publishing And Release Guide](docs/publishing.md)
 - [Security Guide](docs/security.md)
+- [Template Guide](docs/templates.md)
 - [Troubleshooting Guide](docs/troubleshooting.md)
 - [Live Example Worker](example/README.md)
 

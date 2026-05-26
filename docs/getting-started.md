@@ -63,19 +63,31 @@ npx wrangler deploy --env staging
 
 Secrets are values Cloudflare encrypts and exposes to Worker code through `env`.
 
-Create `production.env`:
+Copy the production secret template:
+
+```bash
+cp production.env.example production.env
+```
+
+Then replace the placeholders:
 
 ```env
 MY_SECRET_KEY=replace-with-production-value
-DATABASE_URL=postgres://user:password@prod-host:5432/app
+DATABASE_URL=postgres://app_user:replace_with_db_secret@prod-host:5432/app
 JWT_SECRET=replace-with-a-long-random-production-secret
 ```
 
-Create `staging.env`:
+Copy the staging secret template:
+
+```bash
+cp staging.env.example staging.env
+```
+
+Then replace the placeholders:
 
 ```env
 MY_SECRET_KEY=replace-with-staging-value
-DATABASE_URL=postgres://user:password@staging-host:5432/app
+DATABASE_URL=postgres://app_user:replace_with_db_secret@staging-host:5432/app
 JWT_SECRET=replace-with-a-long-random-staging-secret
 ```
 
@@ -114,6 +126,19 @@ FEATURE_SIGNUPS_ENABLED=false
 ```
 
 Use variables for values that can be visible in logs, command history, Cloudflare metadata, or a public endpoint if your Worker exposes them.
+
+## Optional: Start From A Template
+
+The `templates/` directory includes ready-to-copy setups for common Worker shapes:
+
+```bash
+cp templates/secrets/api-worker.env.example production.env
+cp templates/variables/web-api.vars.env.example production.vars.env
+cp templates/wrangler/production-staging.toml wrangler.toml
+cp templates/workers/health-config-worker.js src/index.js
+```
+
+See `docs/templates.md` for the complete catalog.
 
 ## Step 4: Preview Variables
 

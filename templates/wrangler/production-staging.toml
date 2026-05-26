@@ -1,0 +1,15 @@
+# Production and staging Cloudflare Worker config.
+# Copy to wrangler.toml and change the Worker names.
+
+name = "my-worker"
+main = "src/index.js"
+compatibility_date = "2026-04-23"
+
+[vars]
+ENVIRONMENT = "production"
+
+[env.staging]
+name = "my-worker-staging"
+
+[env.staging.vars]
+ENVIRONMENT = "staging"

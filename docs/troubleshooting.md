@@ -257,11 +257,14 @@ Check `package.json`:
   "docs/",
   "example/",
   "manage-secrets.sh",
+  "production.env.example",
   "production.vars.env.example",
   "rotate-secrets.sh",
   "scripts/",
   "src/",
+  "staging.env.example",
   "staging.vars.env.example",
+  "templates/",
   "wrangler.toml"
 ]
 ```

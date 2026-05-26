@@ -154,6 +154,8 @@ Confirm:
 - `production.vars.env` is not included unless you intentionally made it public.
 - `staging.vars.env` is not included unless you intentionally made it public.
 - `.secret-backups/` is not included.
+
+Safe template files such as `production.env.example`, `staging.env.example`, and files under `templates/` may be included as long as they contain placeholders only.
 - `node_modules/` is not included.
 
 The package `files` list in `package.json` controls what npm includes. Keep it narrow.
