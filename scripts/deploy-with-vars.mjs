@@ -14,7 +14,7 @@ function parseArgs(argv) {
   const passthroughArgs = separatorIndex === -1 ? [] : argv.slice(separatorIndex + 1);
   const options = {
     config: "",
-    env: "",
+    env: null,
     varsFile: "",
     keepVars: false,
     dryRun: false,
@@ -30,7 +30,10 @@ function parseArgs(argv) {
         index += 1;
         break;
       case "--env":
-        options.env = localArgs[index + 1] || fail("Missing value for --env");
+        if (index + 1 >= localArgs.length) {
+          fail("Missing value for --env");
+        }
+        options.env = localArgs[index + 1];
         index += 1;
         break;
       case "--vars-file":
@@ -105,9 +108,7 @@ if (options.config) {
   commandParts.push("--config", options.config);
 }
 
-if (options.env) {
-  commandParts.push("--env", options.env);
-}
+commandParts.push("--env", options.env ?? "");
 
 commandParts.push("deploy");
 

@@ -207,6 +207,8 @@ Basic usage:
 node scripts/deploy-with-vars.mjs --vars-file production.vars.env
 ```
 
+When `--env` is omitted, the wrapper passes `--env ""` to Wrangler. That explicitly targets the top-level production Worker and avoids Wrangler's warning when `wrangler.toml` also contains named environments such as `staging`.
+
 Staging:
 
 ```bash
@@ -242,7 +244,7 @@ Options:
 | Option | Description |
 |---|---|
 | `--config FILE` | Pass `--config FILE` to Wrangler |
-| `--env NAME` | Pass `--env NAME` to Wrangler |
+| `--env NAME` | Pass `--env NAME` to Wrangler. Omit it for the top-level production Worker |
 | `--vars-file FILE` | Load plain-text variables from a file |
 | `--keep-vars` | Pass `--keep-vars` to Wrangler |
 | `--dry-run` | Pass `--dry-run` to Wrangler |

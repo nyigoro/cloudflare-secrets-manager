@@ -223,6 +223,8 @@ npm run deploy:dry-run
 
 This runs the deploy wrapper with `--dry-run`. It is useful before a real release because it shows whether Wrangler accepts the target config and variables.
 
+For production, the deploy wrapper explicitly targets Wrangler's top-level environment, so configs that also define `env.staging` do not trigger Wrangler's multiple-environment warning.
+
 ### Deploy with extra Wrangler flags
 
 Pass additional Wrangler deploy arguments after `--`:

@@ -155,6 +155,29 @@ npm run deploy:staging
 
 If you pass `--config`, verify the path points at the config you intend to use.
 
+## Wrangler Warns About Multiple Environments
+
+Symptom:
+
+```text
+Multiple environments are defined in the Wrangler configuration file, but no target environment was specified
+```
+
+The deploy wrapper fixes this for normal project commands by passing `--env ""` when you do not specify an environment. That tells Wrangler to deploy the top-level production Worker explicitly.
+
+Use the wrapper:
+
+```bash
+npm run deploy:dry-run
+npm run deploy
+```
+
+If you call Wrangler directly, pass the empty environment yourself:
+
+```bash
+npx wrangler deploy --env=""
+```
+
 ## Staging Secrets Uploaded To Production
 
 This usually means the `--env staging` flag was missing.
