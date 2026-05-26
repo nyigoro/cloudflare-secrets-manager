@@ -1,0 +1,19 @@
+# ============================================================
+#  .gitignore — NEVER commit secret files to version control
+# ============================================================
+
+# Cloudflare secret files
+production.env
+staging.env
+*.env
+.dev.vars
+
+# Node
+node_modules/
+.wrangler/
+
+# Local backups created by rotation
+.secret-backups/
+
+# Packaged release artifacts
+*.tgz

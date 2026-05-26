@@ -1,0 +1,63 @@
+{
+  "name": "cloudflare-secrets-manager",
+  "version": "2.0.0",
+  "description": "Manage Cloudflare Workers secrets without touching the dashboard",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyigoro/cloudflare-secrets-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nyigoro/cloudflare-secrets-manager/issues"
+  },
+  "homepage": "https://github.com/nyigoro/cloudflare-secrets-manager#readme",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "wrangler",
+    "secrets",
+    "variables",
+    "deployment"
+  ],
+  "files": [
+    "README.md",
+    "example/",
+    "manage-secrets.sh",
+    "production.vars.env.example",
+    "rotate-secrets.sh",
+    "scripts/",
+    "src/",
+    "staging.vars.env.example",
+    "wrangler.toml"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "sync-secrets": "wrangler secret bulk production.env",
+    "sync-secrets:staging": "wrangler secret bulk staging.env --env staging",
+    "sync-secrets:pages": "wrangler pages secret bulk production.env",
+    "show-vars": "node scripts/show-vars.mjs --vars-file production.vars.env",
+    "show-vars:staging": "node scripts/show-vars.mjs --vars-file staging.vars.env",
+    "list-secrets": "wrangler secret list",
+    "list-secrets:staging": "wrangler secret list --env staging",
+    "list-secrets:pages": "wrangler pages secret list",
+    "delete-secret": "wrangler secret delete",
+    "delete-secret:staging": "wrangler secret delete --env staging",
+    "rotate": "bash rotate-secrets.sh production workers",
+    "rotate:staging": "bash rotate-secrets.sh staging workers",
+    "rotate:pages": "bash rotate-secrets.sh production pages",
+    "deploy:dry-run": "node scripts/deploy-with-vars.mjs --dry-run --vars-file production.vars.env",
+    "deploy:dry-run:staging": "node scripts/deploy-with-vars.mjs --dry-run --env staging --vars-file staging.vars.env",
+    "deploy": "npm run sync-secrets && node scripts/deploy-with-vars.mjs --vars-file production.vars.env",
+    "deploy:staging": "npm run sync-secrets:staging && node scripts/deploy-with-vars.mjs --env staging --vars-file staging.vars.env",
+    "example:sync": "wrangler --config example/wrangler.toml secret bulk example/live-test.env.example",
+    "example:list": "wrangler --config example/wrangler.toml secret list",
+    "example:deploy": "npm run example:sync && wrangler --config example/wrangler.toml deploy",
+    "example:test-live": "node example/live-test.mjs",
+    "example:delete-live-test": "wrangler --config example/wrangler.toml secret delete LIVE_TEST_SECRET",
+    "example:delete-worker": "wrangler delete --config example/wrangler.toml"
+  },
+  "devDependencies": {
+    "wrangler": "^4.94.0"
+  }
+}
