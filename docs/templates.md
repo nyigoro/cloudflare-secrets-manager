@@ -1,6 +1,6 @@
 # Template Guide
 
-The `templates/` directory contains reusable starting points for Workers that need Cloudflare secrets, deploy-time variables, and predictable deployment commands.
+The `templates/` directory contains reusable starting points for Workers that need Cloudflare secrets, plaintext variables, and predictable deployment commands.
 
 All template values are placeholders. Copy a template to the project root before editing it.
 
@@ -9,7 +9,7 @@ All template values are placeholders. Copy a template to the project root before
 | Type | Directory | Use for |
 |---|---|---|
 | Secrets | `templates/secrets/` | Encrypted values uploaded with `wrangler secret bulk` |
-| Variables | `templates/variables/` | Plain-text values passed during deploy |
+| Plaintext variables | `templates/variables/` | Values passed during deploy and shown as `Plaintext` in Cloudflare |
 | Wrangler configs | `templates/wrangler/` | Worker deployment configuration |
 | Worker code | `templates/workers/` | Starter Worker entry points |
 | GitHub Actions | `templates/github-actions/` | CI deployment workflows |
@@ -90,7 +90,7 @@ Use this when the Worker talks to a database or an API that proxies database acc
 
 ## Variable Templates
 
-### Minimal Variables
+### Minimal Plaintext Variables
 
 File:
 
@@ -103,7 +103,7 @@ Includes:
 - `PUBLIC_APP_NAME`
 - `ENVIRONMENT`
 
-### Web API Variables
+### Web API Plaintext Variables
 
 File:
 
@@ -135,9 +135,9 @@ File:
 templates/variables/feature-flags.vars.env.example
 ```
 
-Use this when feature flags are simple booleans that can be visible as plain text.
+Use this when feature flags are simple booleans that can be visible as plaintext Worker bindings.
 
-Private rollout rules, private customer lists, or entitlement tokens should be secrets, not variables.
+Private rollout rules, private customer lists, or entitlement tokens should be secrets, not plaintext variables.
 
 ## Wrangler Templates
 

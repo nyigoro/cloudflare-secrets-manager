@@ -2,7 +2,7 @@
 # ============================================================
 #  manage-secrets.sh
 #  A helper script to manage Cloudflare Workers secrets
-#  and deploy-time variables.
+#  and deploy-time plaintext variables.
 # ============================================================
 
 set -e
@@ -26,17 +26,17 @@ print_help() {
   echo ""
   echo "  Commands:"
   echo "    sync          Push all secrets from the env file to Cloudflare"
-  echo "    vars          Show deploy-time variables from the vars file"
+  echo "    vars          Show deploy-time plaintext variables from the vars file"
   echo "    list          List secret names currently stored for the Worker"
   echo "    delete <KEY>  Delete a specific secret by name"
-  echo "    deploy        Sync secrets, apply variables, then deploy the Worker"
+  echo "    deploy        Sync secrets, apply plaintext variables, then deploy the Worker"
   echo "    help          Show this help message"
   echo ""
   echo "  Options:"
   echo "    --config FILE     Target a specific wrangler config"
   echo "    --env NAME        Target a Wrangler environment like staging"
   echo "    --env-file FILE   Read secrets from a different env file"
-  echo "    --vars-file FILE  Read deploy-time variables from a different vars file"
+  echo "    --vars-file FILE  Read deploy-time plaintext variables from a different vars file"
   echo ""
   echo "  Examples:"
   echo "    bash manage-secrets.sh sync"
@@ -206,7 +206,7 @@ case "$COMMAND" in
     fi
     echo "  Step 1/2: Syncing secrets..."
     run_wrangler secret bulk "$ENV_FILE"
-    echo "  Step 2/2: Deploying Worker with variables..."
+    echo "  Step 2/2: Deploying Worker with plaintext variables..."
     run_node_script scripts/deploy-with-vars.mjs "${deploy_args[@]}"
     echo "  Deployment complete."
     ;;

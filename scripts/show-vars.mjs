@@ -33,14 +33,14 @@ if (!options.varsFile) {
 
 if (!existsSync(options.varsFile)) {
   console.log(`No vars file found at ${options.varsFile}.`);
-  console.log("Create it if you want deploy-time plain-text variables.");
+  console.log("Create it if you want deploy-time plaintext variables.");
   process.exit(0);
 }
 
 const parsed = parseEnv(readFileSync(options.varsFile, "utf8"));
 const keys = Object.keys(parsed);
 
-console.log(`Variables from ${options.varsFile}:`);
+console.log(`Plaintext variables from ${options.varsFile}:`);
 
 if (keys.length === 0) {
   console.log("(none)");

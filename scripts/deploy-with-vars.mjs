@@ -60,14 +60,14 @@ function loadVars(varsFile) {
   }
 
   if (!existsSync(varsFile)) {
-    console.log(`No vars file found at ${varsFile}. Deploying without additional plain-text variables.`);
+    console.log(`No vars file found at ${varsFile}. Deploying without additional plaintext variables.`);
     return {};
   }
 
   const raw = readFileSync(varsFile, "utf8");
   const parsed = parseEnv(raw);
 
-  console.log(`Applying ${Object.keys(parsed).length} variable(s) from ${varsFile}:`);
+  console.log(`Applying ${Object.keys(parsed).length} plaintext variable(s) from ${varsFile}:`);
   for (const key of Object.keys(parsed)) {
     console.log(`- ${key}`);
   }

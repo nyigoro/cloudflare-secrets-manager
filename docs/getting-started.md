@@ -95,21 +95,21 @@ Keep production and staging values different whenever possible. Sharing credenti
 
 ## Step 3: Create Variable Files
 
-Variables are plain-text deploy-time config values. They are not encrypted secrets.
+Plaintext variables are deploy-time config values. They are not encrypted secrets. Cloudflare shows them as `Plaintext` in the dashboard, while Wrangler calls them `vars` or variables.
 
-Create production variables:
+Create production plaintext variables:
 
 ```bash
 cp production.vars.env.example production.vars.env
 ```
 
-Create staging variables:
+Create staging plaintext variables:
 
 ```bash
 cp staging.vars.env.example staging.vars.env
 ```
 
-Example production variables:
+Example production plaintext variables:
 
 ```env
 PUBLIC_APP_NAME=My Production Worker
@@ -117,7 +117,7 @@ PUBLIC_API_BASE_URL=https://api.example.com
 FEATURE_SIGNUPS_ENABLED=true
 ```
 
-Example staging variables:
+Example staging plaintext variables:
 
 ```env
 PUBLIC_APP_NAME=My Staging Worker
@@ -125,7 +125,7 @@ PUBLIC_API_BASE_URL=https://staging-api.example.com
 FEATURE_SIGNUPS_ENABLED=false
 ```
 
-Use variables for values that can be visible in logs, command history, Cloudflare metadata, or a public endpoint if your Worker exposes them.
+Use plaintext variables for values that can be visible in logs, command history, Cloudflare metadata, or a public endpoint if your Worker exposes them.
 
 ## Optional: Start From A Template
 
@@ -140,15 +140,15 @@ cp templates/workers/health-config-worker.js src/index.js
 
 See `docs/templates.md` for the complete catalog.
 
-## Step 4: Preview Variables
+## Step 4: Preview Plaintext Variables
 
-Preview production variables:
+Preview production plaintext variables:
 
 ```bash
 npm run show-vars
 ```
 
-Preview staging variables:
+Preview staging plaintext variables:
 
 ```bash
 npm run show-vars:staging
@@ -202,7 +202,7 @@ Deploy staging:
 npm run deploy:staging
 ```
 
-These commands sync secrets first, then deploy with variables.
+These commands sync secrets first, then deploy with plaintext variables.
 
 ## Step 8: Verify Runtime Configuration
 
@@ -252,6 +252,6 @@ After the first deploy:
 
 - Replace `src/index.js` with your real Worker code.
 - Add only the secret names your Worker actually needs.
-- Add only public, non-sensitive variables to `*.vars.env`.
+- Add only public, non-sensitive plaintext variables to `*.vars.env`.
 - Decide who can edit env files and who can deploy.
 - Read `docs/security.md` before using this in production.

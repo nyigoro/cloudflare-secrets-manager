@@ -86,7 +86,7 @@ JWT_SECRET=replace-me
 
 For staging, create `staging.env`.
 
-## Variables File Not Found
+## Plaintext Variables File Not Found
 
 Symptom:
 
@@ -94,9 +94,9 @@ Symptom:
 No vars file found at production.vars.env.
 ```
 
-This is not fatal. Deploys continue without extra plain-text variables.
+This is not fatal. Deploys continue without extra plaintext variables.
 
-Fix, if you want variables:
+Fix, if you want plaintext variables:
 
 ```bash
 cp production.vars.env.example production.vars.env
@@ -218,9 +218,9 @@ npm run list-secrets:staging
 
 The list shows names only, not values.
 
-## Variable Exists Locally But Worker Shows Old Value
+## Plaintext Variable Exists Locally But Worker Shows Old Value
 
-Variables from `*.vars.env` are passed during deploy. Run a new deploy after editing variables:
+Plaintext variables from `*.vars.env` are passed during deploy. Cloudflare shows them as `Plaintext` in the dashboard. Run a new deploy after editing them:
 
 ```bash
 npm run deploy

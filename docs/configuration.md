@@ -1,6 +1,6 @@
 # Configuration Guide
 
-This guide explains every moving part in the repository: Wrangler config, secret files, variable files, helper scripts, and deployment behavior.
+This guide explains every moving part in the repository: Wrangler config, secret files, plaintext variable files, helper scripts, and deployment behavior.
 
 ## Wrangler Configuration
 
@@ -54,9 +54,9 @@ The Cloudflare Workers compatibility date. Keep it current for new projects, but
 
 ### `[vars]`
 
-Variables declared directly in `wrangler.toml` are plain text. The deploy wrapper in this project can also pass variables from `*.vars.env` using `wrangler deploy --var`.
+Variables declared directly in `wrangler.toml` are plaintext Worker bindings. Cloudflare shows them as `Plaintext` in the dashboard. The deploy wrapper in this project can also pass plaintext variables from `*.vars.env` using `wrangler deploy --var`.
 
-Use `wrangler.toml` vars for stable, non-secret values that rarely change. Use `*.vars.env` files for environment-specific values you want to manage alongside deploys.
+Use `wrangler.toml` vars for stable, non-secret values that rarely change. Use `*.vars.env` files for environment-specific plaintext values you want to manage alongside deploys.
 
 ## Secret Files
 
@@ -101,8 +101,8 @@ Default files:
 
 | File | Environment | Purpose |
 |---|---|---|
-| `production.vars.env` | Production | Plain-text deploy variables |
-| `staging.vars.env` | Staging | Plain-text deploy variables |
+| `production.vars.env` | Production | Plaintext deploy variables |
+| `staging.vars.env` | Staging | Plaintext deploy variables |
 | `production.vars.env.example` | Production template | Safe example values |
 | `staging.vars.env.example` | Staging template | Safe example values |
 
@@ -123,10 +123,10 @@ wrangler deploy --var KEY:VALUE
 ### Variable File Rules
 
 - Treat values as public operational config.
-- Never store tokens, passwords, database credentials, or signing keys in variable files.
+- Never store tokens, passwords, database credentials, or signing keys in plaintext variable files.
 - Use strings for all values.
 - Parse booleans in Worker code if needed.
-- Preview before deploy with `npm run show-vars`.
+- Preview plaintext variables before deploy with `npm run show-vars`.
 
 ## `manage-secrets.sh`
 
@@ -143,10 +143,10 @@ Commands:
 | Command | Description |
 |---|---|
 | `sync` | Upload all secrets from an env file |
-| `vars` | Show deploy-time variables from a vars file |
+| `vars` | Show deploy-time plaintext variables from a vars file |
 | `list` | List secret names currently stored for the Worker |
 | `delete <KEY>` | Delete one secret by name |
-| `deploy` | Sync secrets, apply variables, then deploy |
+| `deploy` | Sync secrets, apply plaintext variables, then deploy |
 | `help` | Print help |
 
 Options:
@@ -156,7 +156,7 @@ Options:
 | `--config FILE` | Use a specific Wrangler config |
 | `--env NAME` | Target a Wrangler environment, such as `staging` |
 | `--env-file FILE` | Read secrets from a specific env file |
-| `--vars-file FILE` | Read variables from a specific vars file |
+| `--vars-file FILE` | Read plaintext variables from a specific vars file |
 
 Examples:
 
@@ -180,11 +180,11 @@ If `--vars-file` is omitted, `manage-secrets.sh` infers a vars file from the env
 | `example.env` | `example.vars.env` |
 | `example.env.example` | `example.vars.env.example` |
 
-If the inferred vars file does not exist, deploys continue without extra variables.
+If the inferred vars file does not exist, deploys continue without extra plaintext variables.
 
 ## `scripts/show-vars.mjs`
 
-Prints parsed variables from a vars file:
+Prints parsed plaintext variables from a vars file:
 
 ```bash
 node scripts/show-vars.mjs --vars-file production.vars.env
@@ -194,12 +194,12 @@ Behavior:
 
 - Fails if `--vars-file` is missing.
 - Exits successfully if the vars file does not exist.
-- Prints `(none)` if the file exists but has no variables.
+- Prints `(none)` if the file exists but has no plaintext variables.
 - Prints values, so do not point it at secret files.
 
 ## `scripts/deploy-with-vars.mjs`
 
-Deploys a Worker with variables from an env-style file.
+Deploys a Worker with plaintext variables from an env-style file.
 
 Basic usage:
 
@@ -227,7 +227,7 @@ Dry run:
 node scripts/deploy-with-vars.mjs --dry-run --vars-file production.vars.env
 ```
 
-Keep existing deploy variables:
+Keep existing deploy plaintext variables:
 
 ```bash
 node scripts/deploy-with-vars.mjs --keep-vars --vars-file production.vars.env
@@ -245,7 +245,7 @@ Options:
 |---|---|
 | `--config FILE` | Pass `--config FILE` to Wrangler |
 | `--env NAME` | Pass `--env NAME` to Wrangler. Omit it for the top-level production Worker |
-| `--vars-file FILE` | Load plain-text variables from a file |
+| `--vars-file FILE` | Load plaintext variables from a file |
 | `--keep-vars` | Pass `--keep-vars` to Wrangler |
 | `--dry-run` | Pass `--dry-run` to Wrangler |
 | `--` | Everything after this is passed to `wrangler deploy` |
@@ -349,7 +349,7 @@ Read `example/README.md` for the complete walkthrough.
 The `templates/` directory provides reusable starting points for:
 
 - Secret env files.
-- Plain-text variable files.
+- Plaintext variable files.
 - Wrangler configs.
 - Worker entry points.
 - GitHub Actions deployment.

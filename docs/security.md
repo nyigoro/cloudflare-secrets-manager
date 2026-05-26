@@ -7,7 +7,7 @@ This project is designed to make Cloudflare secret operations repeatable. It doe
 Cloudflare Secrets Manager separates configuration into two categories:
 
 - Secrets, which are uploaded to Cloudflare with `wrangler secret bulk`.
-- Variables, which are plain-text values passed during deploy with `wrangler deploy --var`.
+- Plaintext variables, which are values passed during deploy with `wrangler deploy --var` and shown as `Plaintext` in the Cloudflare dashboard.
 
 The repository stores templates and scripts. It should not store real secret values.
 
@@ -31,7 +31,7 @@ git status --ignored --short
 
 If you see real secret files under normal untracked files instead of ignored files, stop and fix `.gitignore` before committing.
 
-## Secrets vs Variables
+## Secrets vs Plaintext Variables
 
 Use a secret for:
 
@@ -44,7 +44,7 @@ Use a secret for:
 - Private service endpoints.
 - Anything that would require rotation if posted publicly.
 
-Use a variable for:
+Use a plaintext variable for:
 
 - Public API base URLs.
 - Feature flags.
@@ -52,7 +52,7 @@ Use a variable for:
 - Public app names.
 - Non-sensitive runtime tuning values.
 
-If you are unsure, use a secret.
+If you are unsure, use a secret. Anything in `*.vars.env` is a plaintext Worker binding.
 
 ## Local Machine Hygiene
 
@@ -63,7 +63,7 @@ Recommended habits:
 - Prefer different credentials for staging and production.
 - Avoid sharing env files over chat, email, or tickets.
 - Keep `.secret-backups/` out of commits and uploads.
-- Do not run variable preview commands against secret files.
+- Do not run plaintext variable preview commands against secret files.
 
 ## Command History
 

@@ -1,13 +1,13 @@
 # Cloudflare Secrets Manager
 
-Cloudflare Secrets Manager is a small, scriptable toolkit for managing Cloudflare Workers secrets and deploy-time variables without using the Cloudflare dashboard for every change.
+Cloudflare Secrets Manager is a small, scriptable toolkit for managing Cloudflare Workers secrets and plaintext variables without using the Cloudflare dashboard for every change.
 
 It gives you a repeatable workflow for:
 
 - Uploading encrypted Worker secrets from local env files.
 - Keeping production and staging secret sets separate.
-- Previewing plain-text deploy-time variables before deploys.
-- Deploying Workers with variables applied through Wrangler.
+- Previewing plaintext variables before deploys.
+- Deploying Workers with plaintext variables applied through Wrangler.
 - Rotating secrets with a local backup of the previous secret listing.
 - Running a live example Worker to verify that secret injection works.
 
@@ -17,7 +17,7 @@ The project is intentionally simple: it wraps Wrangler, keeps the behavior visib
 
 - [When To Use This](#when-to-use-this)
 - [Install And Setup](#install-and-setup)
-- [Secrets And Variables](#secrets-and-variables)
+- [Secrets And Plaintext Variables](#secrets-and-plaintext-variables)
 - [Quick Start](#quick-start)
 - [Common Workflows](#common-workflows)
 - [Templates](#templates)
@@ -38,7 +38,7 @@ It is useful for:
 - Projects that need many Cloudflare secrets and do not want to enter them one by one.
 - Workers that use both encrypted secrets and non-secret config values.
 - Developers who want an auditable rotation process.
-- Starter Workers that need a known-good secret and variable setup.
+- Starter Workers that need a known-good secret and plaintext variable setup.
 
 This project is not a hosted secret manager and it does not store secret values remotely. Secret values remain in your local ignored env files until you upload them to Cloudflare with Wrangler.
 
@@ -73,16 +73,23 @@ The npm package is most useful as a distributable copy of the scripts and exampl
 - A configured `wrangler.toml`, `wrangler.json`, or `wrangler.jsonc`.
 - Bash for the shell helper scripts. On Windows, use Git Bash, WSL, or another Bash-compatible shell for `manage-secrets.sh` and `rotate-secrets.sh`.
 
-## Secrets And Variables
+## Secrets And Plaintext Variables
 
 Cloudflare Workers expose configuration to Worker code through the `env` object, but not every value should be managed the same way.
 
-| Type | Stored in this project | Uploaded with | Visible in dashboard/API | Intended for |
+Cloudflare uses two dashboard labels for these bindings:
+
+- `Secret` means the value is encrypted and hidden after upload.
+- `Plaintext` means the value is a normal Worker variable. Wrangler and `wrangler.toml` call these `vars` or variables.
+
+This project uses the phrase `plaintext variables` for values that Cloudflare shows as `Plaintext`.
+
+| Dashboard type | Stored in this project | Uploaded with | Dashboard value display | Intended for |
 |---|---|---|---|---|
 | Secret | `production.env`, `staging.env` | `wrangler secret bulk` | Secret names only | Tokens, API keys, database URLs, JWT secrets |
-| Variable | `production.vars.env`, `staging.vars.env` | `wrangler deploy --var KEY:VALUE` | Values are plain text | Public URLs, feature flags, environment names |
+| Plaintext | `production.vars.env`, `staging.vars.env` | `wrangler deploy --var KEY:VALUE` | Values are visible | Public URLs, feature flags, environment names |
 
-Use secrets for anything private. Use variables only for configuration that can safely be visible to operators and potentially returned by your Worker if your code exposes it.
+Use secrets for anything private. Use plaintext variables only for configuration that can safely be visible to operators and potentially returned by your Worker if your code exposes it.
 
 ## Quick Start
 
@@ -144,7 +151,7 @@ JWT_SECRET=replace-with-a-different-long-random-value
 
 These files are ignored by git.
 
-### 4. Create variable files
+### 4. Create plaintext variable files
 
 Copy the examples:
 
@@ -153,7 +160,7 @@ cp production.vars.env.example production.vars.env
 cp staging.vars.env.example staging.vars.env
 ```
 
-Example variable file:
+Example plaintext variable file:
 
 ```env
 PUBLIC_APP_NAME=My Production Worker
@@ -161,7 +168,7 @@ PUBLIC_API_BASE_URL=https://api.example.com
 FEATURE_SIGNUPS_ENABLED=true
 ```
 
-### 5. Preview variables
+### 5. Preview plaintext variables
 
 ```bash
 npm run show-vars
@@ -207,13 +214,13 @@ npm run sync-secrets:staging
 
 This uploads values from `staging.env` to the `staging` Wrangler environment.
 
-### Preview deploy-time variables
+### Preview plaintext variables
 
 ```bash
 npm run show-vars
 ```
 
-This prints the variables that would be applied from `production.vars.env`.
+This prints the plaintext variables that would be applied from `production.vars.env`.
 
 ### Deploy without uploading secrets
 
@@ -221,7 +228,7 @@ This prints the variables that would be applied from `production.vars.env`.
 npm run deploy:dry-run
 ```
 
-This runs the deploy wrapper with `--dry-run`. It is useful before a real release because it shows whether Wrangler accepts the target config and variables.
+This runs the deploy wrapper with `--dry-run`. It is useful before a real release because it shows whether Wrangler accepts the target config and plaintext variables.
 
 For production, the deploy wrapper explicitly targets Wrangler's top-level environment, so configs that also define `env.staging` do not trigger Wrangler's multiple-environment warning.
 
@@ -262,7 +269,7 @@ The repository includes a reusable template catalog in `templates/`:
 | `production.env.example` | Root production secret template |
 | `staging.env.example` | Root staging secret template |
 | `templates/secrets/` | Minimal, API, and database secret templates |
-| `templates/variables/` | Minimal, web API, and feature flag variable templates |
+| `templates/variables/` | Minimal, web API, and feature flag plaintext variable templates |
 | `templates/wrangler/` | Basic, production/staging, and cron Worker configs |
 | `templates/workers/` | Starter Worker implementations |
 | `templates/github-actions/` | GitHub Actions deploy workflow template |
@@ -285,8 +292,8 @@ See [Template Catalog](templates/README.md) and [Template Guide](docs/templates.
 | `npm run sync-secrets` | Upload `production.env` secrets to the default Worker |
 | `npm run sync-secrets:staging` | Upload `staging.env` secrets to the staging Worker |
 | `npm run sync-secrets:pages` | Upload production secrets to Cloudflare Pages |
-| `npm run show-vars` | Print variables from `production.vars.env` |
-| `npm run show-vars:staging` | Print variables from `staging.vars.env` |
+| `npm run show-vars` | Print plaintext variables from `production.vars.env` |
+| `npm run show-vars:staging` | Print plaintext variables from `staging.vars.env` |
 | `npm run list-secrets` | List production Worker secret names |
 | `npm run list-secrets:staging` | List staging Worker secret names |
 | `npm run list-secrets:pages` | List Cloudflare Pages secret names |
@@ -295,10 +302,10 @@ See [Template Catalog](templates/README.md) and [Template Guide](docs/templates.
 | `npm run rotate` | Back up and rotate production Worker secrets |
 | `npm run rotate:staging` | Back up and rotate staging Worker secrets |
 | `npm run rotate:pages` | Back up and rotate production Pages secrets |
-| `npm run deploy:dry-run` | Dry-run production deploy with variables |
-| `npm run deploy:dry-run:staging` | Dry-run staging deploy with variables |
-| `npm run deploy` | Sync production secrets, then deploy with production variables |
-| `npm run deploy:staging` | Sync staging secrets, then deploy with staging variables |
+| `npm run deploy:dry-run` | Dry-run production deploy with plaintext variables |
+| `npm run deploy:dry-run:staging` | Dry-run staging deploy with plaintext variables |
+| `npm run deploy` | Sync production secrets, then deploy with production plaintext variables |
+| `npm run deploy:staging` | Sync staging secrets, then deploy with staging plaintext variables |
 | `npm run example:sync` | Upload the throwaway live-test secret |
 | `npm run example:list` | List example Worker secret names |
 | `npm run example:deploy` | Sync and deploy the live example Worker |
@@ -356,7 +363,7 @@ Read the detailed guides:
 ## Security Notes
 
 - Never commit `production.env`, `staging.env`, `.dev.vars`, or any other file containing real secrets.
-- Do not put private values in `*.vars.env` files.
+- Do not put private values in `*.vars.env` files. Cloudflare shows those bindings as `Plaintext`.
 - Review `git status --ignored --short` before publishing or creating releases.
 - Treat `.secret-backups/` as sensitive operational history even though it stores secret names, not values.
 - Rotate secrets immediately if an env file is accidentally committed, pasted into a ticket, or shared in chat.

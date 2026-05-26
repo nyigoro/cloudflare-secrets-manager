@@ -18,13 +18,13 @@ Staging secrets:
 cp templates/secrets/api-worker.env.example staging.env
 ```
 
-Production variables:
+Production plaintext variables:
 
 ```bash
 cp templates/variables/web-api.vars.env.example production.vars.env
 ```
 
-Staging variables:
+Staging plaintext variables:
 
 ```bash
 cp templates/variables/web-api.vars.env.example staging.vars.env
@@ -47,7 +47,7 @@ cp templates/workers/health-config-worker.js src/index.js
 | Directory | Purpose |
 |---|---|
 | `secrets/` | Env-file templates for encrypted Cloudflare secrets |
-| `variables/` | Env-file templates for plain deploy-time variables |
+| `variables/` | Env-file templates for deploy-time plaintext variables |
 | `wrangler/` | Wrangler config templates |
 | `workers/` | Worker entry-point templates |
 | `github-actions/` | CI deployment workflow templates |
