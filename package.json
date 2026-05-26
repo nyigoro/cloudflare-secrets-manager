@@ -1,7 +1,8 @@
 {
   "name": "cloudflare-secrets-manager",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Manage Cloudflare Workers secrets without touching the dashboard",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nyigoro/cloudflare-secrets-manager.git"
