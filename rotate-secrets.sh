@@ -57,6 +57,10 @@ esac
 
 [ -f "$ENV_FILE" ] || fail "$ENV_FILE not found."
 
+if [ "$TARGET" = "workers" ] && [ "$ENVIRONMENT" = "production" ]; then
+  ENV_ARGS=(--env "")
+fi
+
 TIMESTAMP="$(date +"%Y%m%d_%H%M%S")"
 BACKUP_DIR=".secret-backups"
 BACKUP_FILE="$BACKUP_DIR/secret-list_${ENVIRONMENT}_${TARGET}_${TIMESTAMP}.txt"

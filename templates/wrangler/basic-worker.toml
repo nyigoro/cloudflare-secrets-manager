@@ -4,6 +4,8 @@
 name = "my-worker"
 main = "src/index.js"
 compatibility_date = "2026-04-23"
+workers_dev = true
+preview_urls = true
 
 [vars]
 ENVIRONMENT = "production"

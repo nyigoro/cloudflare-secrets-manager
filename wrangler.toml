@@ -2,12 +2,16 @@
 name = "nyigoro-secrets-manager"
 main = "src/index.js"
 compatibility_date = "2026-04-23"
+workers_dev = true
+preview_urls = true
 
 [vars]
 ENVIRONMENT = "production"
 
 [env.staging]
 name = "nyigoro-secrets-manager-staging"
+workers_dev = true
+preview_urls = true
 
 [env.staging.vars]
 ENVIRONMENT = "staging"

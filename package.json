@@ -39,15 +39,15 @@
     "access": "public"
   },
   "scripts": {
-    "sync-secrets": "wrangler secret bulk production.env",
+    "sync-secrets": "wrangler secret bulk production.env --env=\"\"",
     "sync-secrets:staging": "wrangler secret bulk staging.env --env staging",
     "sync-secrets:pages": "wrangler pages secret bulk production.env",
     "show-vars": "node scripts/show-vars.mjs --vars-file production.vars.env",
     "show-vars:staging": "node scripts/show-vars.mjs --vars-file staging.vars.env",
-    "list-secrets": "wrangler secret list",
+    "list-secrets": "wrangler secret list --env=\"\"",
     "list-secrets:staging": "wrangler secret list --env staging",
     "list-secrets:pages": "wrangler pages secret list",
-    "delete-secret": "wrangler secret delete",
+    "delete-secret": "wrangler secret delete --env=\"\"",
     "delete-secret:staging": "wrangler secret delete --env staging",
     "rotate": "bash rotate-secrets.sh production workers",
     "rotate:staging": "bash rotate-secrets.sh staging workers",
