@@ -23,6 +23,13 @@ If you want a starting point for variables, use:
 
 ## Quick Start
 
+### Install from GitHub Packages
+
+```bash
+npm config set @nyigoro:registry https://npm.pkg.github.com
+npm install @nyigoro/cloudflare-secrets-manager
+```
+
 ### 1. Install dependencies and log in
 ```bash
 npm install

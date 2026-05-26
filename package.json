@@ -1,6 +1,6 @@
 {
-  "name": "cloudflare-secrets-manager",
-  "version": "2.0.0",
+  "name": "@nyigoro/cloudflare-secrets-manager",
+  "version": "2.0.1",
   "description": "Manage Cloudflare Workers secrets without touching the dashboard",
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "wrangler.toml"
   ],
   "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
     "access": "public"
   },
   "scripts": {
