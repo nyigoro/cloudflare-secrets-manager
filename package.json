@@ -21,6 +21,7 @@
   ],
   "files": [
     "README.md",
+    "docs/",
     "example/",
     "manage-secrets.sh",
     "production.vars.env.example",
